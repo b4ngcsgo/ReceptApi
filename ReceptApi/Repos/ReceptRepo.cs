@@ -102,6 +102,16 @@ namespace ReceptApi.Repos
             }
             await connection.ExecuteAsync("INSERT INTO betyg (receptid, userid, betyg) VALUES (@ReceptId, @UserId, @Betyg)", new { ReceptId = receptId, UserId = userId, Betyg = betyg });
         }
+        public async Task<IEnumerable<Recept>> SearchRecept(string titel)
+        {
+            using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            string sql = "SELECT * FROM recept WHERE titel LIKE @Sökterm";
+            var parameters = new { Sökterm = "%" + titel + "%" };
+            {
+                return await connection.QueryAsync<Recept>(sql, parameters);
+            }
+        }
+
 
     }
 }

@@ -70,6 +70,13 @@ namespace ReceptApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("Sök recept")]
+
+        public async Task<IActionResult> SearchRecept(string titel)
+        {
+            var recept = await _receptRepo.SearchRecept(titel);
+            return Ok(recept);
+        }
 
 
     }
